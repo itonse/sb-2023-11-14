@@ -215,6 +215,13 @@ public class HomeController {
         return "calc21";
     }
 
+    private int num = 0;    // 인스턴스 변수
+    @GetMapping("/calc22")
+    @ResponseBody
+    int showCalc21() {
+        return ++num;
+    }
+
     @AllArgsConstructor
     class Person {
         public String name;
