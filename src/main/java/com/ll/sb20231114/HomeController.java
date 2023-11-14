@@ -3,6 +3,7 @@ package com.ll.sb20231114;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -126,6 +127,92 @@ public class HomeController {
         }};
 
         return persons;
+    }
+
+    @GetMapping("/calc14")
+    @ResponseBody
+    String showCalc14() {
+        String html = "";    // String 이용(비추)
+
+        html += "<div>";
+        html += "<input type=\"text\" placeholder=\"내용\">";
+        html += "</div>";
+
+        return html;
+    }
+
+    @GetMapping("/calc15")
+    @ResponseBody
+    String showCalc15() {
+        StringBuilder sb = new StringBuilder();    // StringBuilder 이용(추천)
+
+        sb.append("<div>");
+        sb.append("<input type=\"text\" placeholder=\"내용\" >");
+        sb.append("</div>");
+
+        return sb.toString();
+    }
+
+    @GetMapping("/calc16")
+    @ResponseBody
+    String showCalc16() {    // 한 줄로 이어쓰기
+        String html = "<div><input type=\"text\" placeholder=\"내용\"></div>";
+
+        return html;
+    }
+
+    @GetMapping("/calc17")
+    @ResponseBody
+    String showCalc17() {    // TextBlock: """  """ 이용해서 문자열 여러 줄을 한번에 쓰기
+        String html = """
+                <div>
+                    <input type="text" placeholder="내용">
+                </div>
+                """;
+
+        return html;
+    }
+
+    @GetMapping("/calc18")
+    @ResponseBody
+    String showCalc18() {    // value 값도 추가
+        String html = """
+                <div>
+                    <input type="text" placeholder="내용" value="반가워요.">   
+                </div>
+                """;
+
+        return html;
+    }
+
+    @GetMapping("/calc19")    // http://localhost:8020/calc19?subject=아무제목&content=아무내용
+    @ResponseBody
+    String showCalc19(
+            @RequestParam(defaultValue = "") String subject,
+            @RequestParam(defaultValue = "") String content
+    ) {
+        String html = """
+                <div>
+                    <input type="text" placeholder="제목" value="%s">
+                </div>
+                <div>
+                    <input type="text" placeholder="내용" value="%s">
+                </div>
+                """.formatted(subject, content);
+
+        return html;
+    }
+
+    @GetMapping("/calc20")
+    String showCalc20() {    // 타임리프 사용
+        return "calc20";
+    }
+
+    @GetMapping("/calc21")
+    String showCalc21(Model model) {    // v1, v2에 값 넣기
+        model.addAttribute("v1", "안녕");
+        model.addAttribute("v2", "반가워");
+        return "calc21";
     }
 
     @AllArgsConstructor
