@@ -26,15 +26,11 @@ public class ArticleController {
         Article article = new Article(articles.size() + 1, title, body);
         articles.add(article);
 
-        RsData rs = new RsData(
+        RsData<Article> rs = new RsData<>(     // <> 안에 타입 명시 필요
                 "S-1",
                 "%d번 게시물이 작성되었습니다.".formatted(article.getId()),
                 article
         );
-
-        String resultCode = rs.getResultCode();
-        String msg = rs.getMsg();
-        Article _article = (Article) rs.getData();
 
         return rs;
     }
@@ -54,10 +50,10 @@ public class ArticleController {
 
 @AllArgsConstructor
 @Getter
-class RsData {
+class RsData<T> {
     private String resultCode;
     private String msg;
-    private Object data;
+    private T data;
 }
 
 @AllArgsConstructor
