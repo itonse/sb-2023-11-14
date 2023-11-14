@@ -27,9 +27,9 @@ public class ArticleController {
         articles.add(article);
 
         RsData<Article> rs = new RsData<>(     // <> 안에 타입 명시 필요
-                "S-1",
-                "%d번 게시물이 작성되었습니다.".formatted(article.getId()),
-                article
+                "S-1",    // 성공 코드
+                "%d번 게시물이 작성되었습니다.".formatted(article.getId()),   // 성공 메시지
+                article    // 작성된 게시물 객체
         );
 
         return rs;
@@ -50,10 +50,10 @@ public class ArticleController {
 
 @AllArgsConstructor
 @Getter
-class RsData<T> {
+class RsData<T> {     // API 응답을 나타내는 제네릭 클래스
     private String resultCode;
     private String msg;
-    private T data;
+    private T data;     // data의 타입을 지정하지 않아, 유연하게 값을 받을 수 있다.
 }
 
 @AllArgsConstructor
