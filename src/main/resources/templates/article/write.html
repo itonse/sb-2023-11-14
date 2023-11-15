@@ -2,7 +2,7 @@
     전송
 </a>
 <hr>
-<form action="/article/doWrite" onsubmit="submitWriteForm(this); return false;"
+<form method="POST" action="/article/doWrite" onsubmit="submitWriteForm(this); return false;"
       style="display: flex; flex-direction: column; gap:20px; max-width:500px;">
     <!-- 제목을 입력할 수 있는 텍스트 필드 -->
     <input type="text" name="title" placeholder="제목">
