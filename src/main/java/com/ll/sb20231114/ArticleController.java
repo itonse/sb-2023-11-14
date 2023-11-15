@@ -6,7 +6,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 public class ArticleController {
@@ -26,19 +27,17 @@ public class ArticleController {
         Article article = new Article(articles.size() + 1, title, body);
         articles.add(article);
 
-        RsData<Article> rs = new RsData<>(     // <> 안에 타입 명시 필요
+        return new RsData<>(     // <> 안에 타입 생략 가능
                 "S-1",    // 성공 코드
                 "%d번 게시물이 작성되었습니다.".formatted(article.getId()),   // 성공 메시지
                 article    // 작성된 게시물 객체
         );
-
-        return rs;
     }
 
     @GetMapping("/article/getLastArticle")
     @ResponseBody
     Article getLastArticle() {
-        return articles.getLast();
+        return articles.getLast();    // 리스트의 마지막 원소 가져오기
     }
 
     @GetMapping("/article/getArticles")
