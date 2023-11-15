@@ -9,8 +9,12 @@ import java.util.List;
 
 @Service
 public class ArticleService {
-    @Autowired
-    private ArticleRepository articleRepository;
+    private final ArticleRepository articleRepository;
+
+    @Autowired  // 생성자 주입 (생성자가 하나라서 어노테이션 생략 가능)
+    public ArticleService(ArticleRepository articleRepository) {
+        this.articleRepository = articleRepository;
+    }
 
     public Article write(String title, String body) {
         Article article = new Article(title, body);

@@ -8,7 +8,7 @@ import java.util.List;
 
 @Repository
 public class ArticleRepository {
-    private List<Article> articles = new ArrayList<>();
+    private final List<Article> articles = new ArrayList<>();
 
     public Article save(Article article) {
         if (article.getId() == null) {

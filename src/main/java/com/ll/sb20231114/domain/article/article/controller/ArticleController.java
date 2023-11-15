@@ -13,8 +13,12 @@ import java.util.List;
 
 @Controller
 public class ArticleController {
-    @Autowired
-    private ArticleService articleService;
+    private final ArticleService articleService;
+
+    @Autowired  // 생성자 주입 (생성자가 하나라서 어노테이션 생략 가능)
+    public ArticleController(ArticleService articleService) {
+        this.articleService = articleService;
+    }
 
     @GetMapping("/article/write")
     String showWrite() {
