@@ -1,6 +1,7 @@
 <div style="display: flex; flex-direction: column; gap:20px; max-width:500px">
+    <!-- 제목을 입력할 수 있는 텍스트 필드 -->
     <input type="text" id="input-title" placeholder="제목">
-
+    <!-- 내용을 입력할 수 있는 텍스트 필드 -->
     <input type="text" id="input-body" placeholder="내용">
 
     <!-- javascript:; 는 아무것도 하지 않는다는 뜻 -->
@@ -10,16 +11,20 @@
 </div>
 
 <script>
-    function submitWriteForm() {
+    function submitWriteForm() {    // 글쓰기 폼 제출 함수
+        // 제목, 내용 값 입력받기
         const inputTitle = document.getElementById('input-title');
         const inputBody = document.getElementById('input-body');
 
+        // 앞 공백, 뒷 공백 제거하기
         inputTitle.value = inputTitle.value.trim();
         inputBody.value = inputBody.value.trim();
 
+        // 앞 공백, 뒷 공백 제거한 제목과 내용 값을 변수에 저장
         const title = inputTitle.value;
         const body = inputBody.value;
 
+        // 제목or내용이 비어있는 경우 알림 창을 띄우고 해당 입력 필드로 포커스 이동
         if (title.length == 0) {
             alert('제목을 입력해주세요.');
             inputTitle.focus();
@@ -34,6 +39,7 @@
             return;
         }
 
+        // 제목과 내용을 파라미터로 하여 서버에 요청하는 URL로 이동
         location.href = `/article/doWrite?title=${title}&body=${body}`;
     }
 </script>
