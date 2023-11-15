@@ -1,4 +1,4 @@
-package com.ll.sb20231114.domain.article.global;
+package com.ll.sb20231114.domain.article.global.rsData;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

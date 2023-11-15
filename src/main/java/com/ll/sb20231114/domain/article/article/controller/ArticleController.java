@@ -2,8 +2,8 @@ package com.ll.sb20231114.domain.article.article.controller;
 
 import com.ll.sb20231114.domain.article.article.entity.Article;
 import com.ll.sb20231114.domain.article.article.service.ArticleService;
-import com.ll.sb20231114.domain.article.global.RsData;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.ll.sb20231114.domain.article.global.rsData.RsData;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -12,13 +12,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import java.util.List;
 
 @Controller
+@RequiredArgsConstructor
 public class ArticleController {
     private final ArticleService articleService;
-
-    @Autowired  // 생성자 주입 (생성자가 하나라서 어노테이션 생략 가능)
-    public ArticleController(ArticleService articleService) {
-        this.articleService = articleService;
-    }
 
     @GetMapping("/article/write")
     String showWrite() {
