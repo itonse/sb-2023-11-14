@@ -1,7 +1,7 @@
-package com.ll.sb20231114;
+package com.ll.sb20231114.domain.article.article.controller;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
+import com.ll.sb20231114.domain.article.article.entity.Article;
+import com.ll.sb20231114.domain.article.global.RsData;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -46,20 +46,4 @@ public class ArticleController {
     List<Article> getArticles() {
         return articles;
     }
-}
-
-@AllArgsConstructor
-@Getter
-class RsData<T> {     // API 응답을 나타내는 제네릭 클래스
-    private String resultCode;
-    private String msg;
-    private T data;     // data의 타입을 지정하지 않아, 유연하게 값을 받을 수 있다.
-}
-
-@AllArgsConstructor
-@Getter
-class Article {
-    private long id;
-    private String title;
-    private String body;
 }
