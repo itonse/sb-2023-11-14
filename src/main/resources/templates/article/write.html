@@ -1,11 +1,14 @@
-<form onsubmit="submitWriteForm(this); return false;"
+<a href="http://localhost:8020/article/doWrite?title=제목임&body=내용임">
+    전송
+</a>
+<hr>
+<form action="/article/doWrite" onsubmit="submitWriteForm(this); return false;"
       style="display: flex; flex-direction: column; gap:20px; max-width:500px;">
     <!-- 제목을 입력할 수 있는 텍스트 필드 -->
     <input type="text" name="title" placeholder="제목">
     <!-- 내용을 입력할 수 있는 텍스트 필드 -->
     <input type="text" name="body" placeholder="내용">
 
-    <!-- javascript:; 는 아무것도 하지 않는다는 뜻 -->
     <button type="submit">
         글쓰기
     </button>
@@ -40,7 +43,6 @@
             return;
         }
 
-        // 제목과 내용을 파라미터로 하여 서버에 요청하는 URL로 이동
-        location.href = `/article/doWrite?title=${title}&body=${body}`;
+        form.submit();   // form은 URL 전송기
     }
 </script>
