@@ -3,6 +3,7 @@ package com.ll.sb20231114.domain.article.article.controller;
 import com.ll.sb20231114.domain.article.article.entity.Article;
 import com.ll.sb20231114.domain.article.article.service.ArticleService;
 import com.ll.sb20231114.domain.article.global.rsData.RsData;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -34,6 +35,25 @@ public class ArticleController {
                 "%d번 게시물이 작성되었습니다.".formatted(article.getId()),   // 성공 메시지
                 article    // 작성된 게시물 객체
         );
+    }
+
+    @PostMapping("/article/write2")
+    @ResponseBody
+    RsData write2(
+            HttpServletRequest req
+    ) {
+        String title = req.getParameter("title");
+        String body = req.getParameter("body");
+
+        Article article = articleService.write(title, body);
+
+        RsData<Article> rs = new RsData<>(
+                "S-1",
+                "%d번 게시물이 작성되었습니다.".formatted(article.getId()),
+                article
+        );
+
+        return rs;
     }
 
     @GetMapping("/article/getLastArticle")
