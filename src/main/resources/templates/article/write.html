@@ -1,11 +1,9 @@
-<a onclick="return false;" href="https://www.naver.com">네이버</a>
-
-<form onsubmit="submitWriteForm(); return false;"
+<form onsubmit="submitWriteForm(this); return false;"
       style="display: flex; flex-direction: column; gap:20px; max-width:500px;">
     <!-- 제목을 입력할 수 있는 텍스트 필드 -->
-    <input type="text" id="input-title" placeholder="제목">
+    <input type="text" name="title" placeholder="제목">
     <!-- 내용을 입력할 수 있는 텍스트 필드 -->
-    <input type="text" id="input-body" placeholder="내용">
+    <input type="text" name="body" placeholder="내용">
 
     <!-- javascript:; 는 아무것도 하지 않는다는 뜻 -->
     <button type="submit">
@@ -14,10 +12,10 @@
 </form>
 
 <script>
-    function submitWriteForm() {    // 글쓰기 폼 제출 함수
+    function submitWriteForm(form) {    // 글쓰기 폼 제출 함수
         // 제목, 내용 값 입력받기
-        const inputTitle = document.getElementById('input-title');
-        const inputBody = document.getElementById('input-body');
+        const inputTitle = form.title;
+        const inputBody = form.body;
 
         // 앞 공백, 뒷 공백 제거하기
         inputTitle.value = inputTitle.value.trim();
