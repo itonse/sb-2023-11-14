@@ -20,7 +20,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ArticleController {
     private final ArticleService articleService;
-    private final Rq rq;
+    private final Rq rq;   // 대리자
 
     @GetMapping("/article/write")
     String showWrite() {
@@ -44,7 +44,7 @@ public class ArticleController {
 
     @PostMapping("/article/write2")
     @SneakyThrows
-    void write2(
+    void write2(    // 위의 write 메서드의 전통적인 서블릿 방식
             HttpServletRequest req,
             HttpServletResponse resp
     ) {
@@ -78,25 +78,27 @@ public class ArticleController {
         return articleService.findAll();
     }
 
-    @GetMapping("/article/articleServicePointer")
+    ///// 객체의 생명주기
+
+    @GetMapping("/article/articleServicePointer")    // 서비스 객체는 처음 생성 후 매번 요청마다 같은 객체를 사용
     @ResponseBody
     String articleServicePointer() {
         return articleService.toString();
     }
 
-    @GetMapping("/article/httpServletRequestPointer")
+    @GetMapping("/article/httpServletRequestPointer")    // Request는 요청이 들어오면 객체가 생성되고, 끝나면 사라진다
     @ResponseBody
     String httpServletRequestPointer(HttpServletRequest req) {
         return req.toString();
     }
 
-    @GetMapping("/article/httpServletResponsePointer")
+    @GetMapping("/article/httpServletResponsePointer")    // Response도 요청이 들어오면 객체가 생성되고, 끝나면 사라진다
     @ResponseBody
     String httpServletResponsePointer(HttpServletResponse resp) {
         return resp.toString();
     }
 
-    @GetMapping("/article/rqPointer")
+    @GetMapping("/article/rqPointer")    // Rq도 @RequestScope에 의해 요청이 들어오면 객체가 생성되고, 끝나면 사라진다
     @ResponseBody
     String rqPointer() {
         return rq.toString();
