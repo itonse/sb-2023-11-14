@@ -6,10 +6,12 @@ import com.ll.sb20231114.domain.article.global.rq.Rq;
 import com.ll.sb20231114.domain.article.global.rsData.RsData;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 import org.springframework.stereotype.Controller;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -18,7 +20,6 @@ import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
-@Validated
 public class ArticleController {
     private final ArticleService articleService;
     private final Rq rq;   // 대리자
@@ -28,21 +29,21 @@ public class ArticleController {
         return "article/write";
     }
 
+    @Setter
+    @Getter
+    public static class WriteForm {
+        @NotBlank(message = "제목을 입력해주세요.")
+        private String title;
+        @NotBlank(message = "내용을 입력해주세요.")
+        private String body;
+    }
+
     @PostMapping("/article/write")
     @ResponseBody
     RsData write(
-            @NotBlank(message = "제목좀..") String title,
-            @NotBlank String body
+            @Valid WriteForm writeForm
     ) {
-        if (title == null || title.trim().length() == 0) {
-            throw new IllegalArgumentException("제목을 입력해주세요.");
-        }
-
-        if (body == null || body.trim().length() == 0) {
-            throw new IllegalArgumentException("내용을 입력해주세요.");
-        }
-
-        Article article = articleService.write(title, body);
+        Article article = articleService.write(writeForm.title, writeForm.body);
 
         return new RsData<>(     // <> 안에 타입 생략 가능
                 "S-1",    // 성공 코드
