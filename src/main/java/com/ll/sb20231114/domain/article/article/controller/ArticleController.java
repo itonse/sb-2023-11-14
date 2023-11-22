@@ -84,7 +84,7 @@ public class ArticleController {
         return resp.toString();
     }
 
-    @GetMapping("/article/rqPointer")    // Rq도 @RequestScope에 의해 요청이 들어오면 객체가 생성되고, 끝나면 사라진다
+    @GetMapping("/article/rqTest")    // Rq도 @RequestScope에 의해 요청이 들어오면 객체가 생성되고, 끝나면 사라진다
     @ResponseBody
     String rqPointer() {
         return rq.toString();
