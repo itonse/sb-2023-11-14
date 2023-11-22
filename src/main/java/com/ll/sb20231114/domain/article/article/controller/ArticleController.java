@@ -3,7 +3,6 @@ package com.ll.sb20231114.domain.article.article.controller;
 import com.ll.sb20231114.domain.article.article.entity.Article;
 import com.ll.sb20231114.domain.article.article.service.ArticleService;
 import com.ll.sb20231114.domain.article.global.rq.Rq;
-import com.ll.sb20231114.domain.article.global.rsData.RsData;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
@@ -40,17 +39,12 @@ public class ArticleController {
     }
 
     @PostMapping("/article/write")
-    @ResponseBody
-    RsData write(
-            @Valid WriteForm writeForm
-    ) {
+    String write(@Valid WriteForm writeForm) {
         Article article = articleService.write(writeForm.title, writeForm.body);
 
-        return new RsData<>(     // <> 안에 타입 생략 가능
-                "S-1",    // 성공 코드
-                "%d번 게시물이 작성되었습니다.".formatted(article.getId()),   // 성공 메시지
-                article    // 작성된 게시물 객체
-        );
+        String msg = "id %d, article created".formatted(article.getId());
+
+        return "redirect:/article/list?msg=" + msg;
     }
 
     @GetMapping("/article/list")
