@@ -35,6 +35,8 @@ dependencies {
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     // actuator
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
+    // validation
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
 }
 
 tasks.named('bootBuildImage') {
