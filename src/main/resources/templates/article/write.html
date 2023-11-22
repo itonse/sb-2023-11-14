@@ -27,19 +27,19 @@
         const body = inputBody.value;
 
         // 제목or내용이 비어있는 경우 알림 창을 띄우고 해당 입력 필드로 포커스 이동
-        // if (title.length == 0) {
-        //     alert('제목을 입력해주세요.');
-        //     inputTitle.focus();
-        //
-        //     return;
-        // }
-        //
-        // if (body.length == 0 ) {
-        //     alert('내용을 입력해주세요.');
-        //     inputTitle.focus();
-        //
-        //     return;
-        // }
+        if (title.length == 0) {
+            alert('제목을 입력해주세요.');
+            inputTitle.focus();
+
+            return;
+        }
+
+        if (body.length == 0 ) {
+            alert('내용을 입력해주세요.');
+            inputTitle.focus();
+
+            return;
+        }
 
         form.submit();   // 폼 제출
     }
