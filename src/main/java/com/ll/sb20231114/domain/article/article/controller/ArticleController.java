@@ -13,10 +13,12 @@ import lombok.Setter;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequiredArgsConstructor
@@ -24,9 +26,13 @@ public class ArticleController {
     private final ArticleService articleService;
     private final Rq rq;   // 대리자
 
-    @GetMapping("/article/write")
-    String showWrite() {
-        return "article/write";
+    @GetMapping("/article/detail/{id}")
+    @ResponseBody
+    String showDetail(@PathVariable long id) {
+        Optional<Article> opArticle = articleService.findById(id);
+        Article article = opArticle.get();
+
+        return "article/detail";
     }
 
     @Setter
