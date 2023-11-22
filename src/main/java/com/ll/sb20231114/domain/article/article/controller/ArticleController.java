@@ -12,6 +12,7 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -50,6 +51,15 @@ public class ArticleController {
                 "%d번 게시물이 작성되었습니다.".formatted(article.getId()),   // 성공 메시지
                 article    // 작성된 게시물 객체
         );
+    }
+
+    @GetMapping("/article/list")
+    String showList(Model model) {    //  model은 Spring MVC에서 뷰에 데이터를 전달하는 데 사용되는 객체
+        List<Article> articles = articleService.findAll();
+
+        model.addAttribute("articles", articles);   // model에 articles 라는 이름으로 데이터를 추가하여 뷰로 전달
+
+        return "article/list";   // 페이지(뷰) 반환
     }
 
     @GetMapping("/article/getLastArticle")
