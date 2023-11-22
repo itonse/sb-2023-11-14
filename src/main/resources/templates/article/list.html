@@ -2,5 +2,7 @@
 
 <!-- th:if 기능 -> if가 참이면 아래 코드를 실행한다 -->
 <ul th:if="${articles.size} > 0">
-    <li th:each="article : ${articles}" th:text="|${article.id}번 ${article.title}|"></li>
+    <li th:each="article : ${articles}">
+        <a th:href="|/article/datail/${article.id}|" th:text="|${article.id}번 ${article.title}|"></a>
+    </li>
 </ul>
