@@ -34,6 +34,11 @@ public class ArticleController {
         return "article/detail";
     }
 
+    @GetMapping("/article/write")
+    String showWrite() {
+        return "article/write";
+    }
+
     @Setter
     @Getter
     public static class WriteForm {
