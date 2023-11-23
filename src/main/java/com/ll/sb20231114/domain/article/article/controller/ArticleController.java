@@ -4,15 +4,16 @@ import com.ll.sb20231114.domain.article.article.entity.Article;
 import com.ll.sb20231114.domain.article.article.service.ArticleService;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
-import lombok.Getter;
+import lombok.Data;
 import lombok.RequiredArgsConstructor;
-import lombok.Setter;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 @Controller
@@ -21,12 +22,12 @@ public class ArticleController {
     private final ArticleService articleService;
 
     @GetMapping("/article/list")
-    String showList(Model model) {    //  model은 Spring MVC에서 뷰에 데이터를 전달하는 데 사용되는 객체
+    String showList(Model model) {
         List<Article> articles = articleService.findAll();
 
-        model.addAttribute("articles", articles);   // model에 articles 라는 이름으로 데이터를 추가하여 뷰로 전달
+        model.addAttribute("articles", articles);
 
-        return "article/list";   // 페이지(뷰) 반환
+        return "article/list";
     }
 
     @GetMapping("/article/detail/{id}")
@@ -43,13 +44,23 @@ public class ArticleController {
         return "article/write";
     }
 
-    @Setter
-    @Getter
+    @Data
     public static class WriteForm {
-        @NotBlank(message = "제목을 입력해주세요.")
+        @NotBlank
         private String title;
-        @NotBlank(message = "내용을 입력해주세요.")
+        @NotBlank
         private String body;
+    }
+
+    @PostMapping("/article/write")
+    String write(@Valid WriteForm writeForm) {
+        Article article = articleService.write(writeForm.title, writeForm.body);
+
+        String msg = "%d번 게시물 생성되었습니다.".formatted(article.getId());
+
+        msg = URLEncoder.encode(msg, StandardCharsets.UTF_8);
+
+        return "redirect:/article/list?msg=" + msg;
     }
 
     @GetMapping("/article/modify/{id}")
@@ -61,12 +72,11 @@ public class ArticleController {
         return "article/modify";
     }
 
-    @Setter
-    @Getter
+    @Data
     public static class ModifyForm {
-        @NotBlank(message = "제목을 입력해주세요.")
+        @NotBlank
         private String title;
-        @NotBlank(message = "내용을 입력해주세요.")
+        @NotBlank
         private String body;
     }
 
@@ -74,16 +84,7 @@ public class ArticleController {
     String write(@PathVariable long id, @Valid ModifyForm modifyForm) {
         articleService.modify(id, modifyForm.title, modifyForm.body);
 
-        String msg = "id %d, article modified".formatted(id);
-
-        return "redirect:/article/list?msg=" + msg;
-    }
-
-    @PostMapping("/article/write")
-    String write(@Valid WriteForm writeForm) {
-        Article article = articleService.write(writeForm.title, writeForm.body);
-
-        String msg = "id %d, article created".formatted(article.getId());
+        String msg = "%d번 게시물 수정되었습니다.".formatted(id);
 
         return "redirect:/article/list?msg=" + msg;
     }
@@ -92,7 +93,7 @@ public class ArticleController {
     String delete(@PathVariable long id) {
         articleService.delete(id);
 
-        String msg = "id %d, article deleted".formatted(id);
+        String msg = "%d번 게시물 삭제되었습니다.".formatted(id);
 
         return "redirect:/article/list?msg=" + msg;
     }
