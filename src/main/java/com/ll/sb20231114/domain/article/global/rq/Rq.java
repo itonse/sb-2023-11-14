@@ -5,6 +5,9 @@ import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.annotation.RequestScope;
 
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
+
 /* @RequestScope
    객체의 생명주기 설정 (HTTP 요청마다 객체의 인스턴스가 새롭게 생성되고, 끝날 때 제거된다)
    보유 필드 중 가장 짧은 수명에 맞춘다.
@@ -18,5 +21,10 @@ public class Rq {
     public Rq(HttpServletRequest req, HttpServletResponse res) {
         this.req = req;
         this.res = res;
+    }
+
+    public String redirect(String path, String msg) {
+        msg = URLEncoder.encode(msg, StandardCharsets.UTF_8);
+        return "redirect:" + path + "?msg=" + msg;
     }
 }
